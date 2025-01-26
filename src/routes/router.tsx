@@ -16,7 +16,7 @@ export const router = createBrowserRouter(
       <Route element={<AuthenLayout />}>
         <Route path="books" element={<BooksPage />} />
         <Route element={<ProtectedRoute requireRoles={["admin"]} />}>
-          <Route element={<BooksManagement />} />
+          <Route path="books-management" element={<BooksManagement />} />
         </Route>
       </Route>
     </>

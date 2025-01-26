@@ -1,6 +1,6 @@
 import { api } from "@/services";
 import { User } from "@/types";
-import { BaseResponseProps } from "@/types/utilsTypes";
+import { BaseResponseProps } from "@/types";
 
 export const loginApi = async (body: {
   email: string;

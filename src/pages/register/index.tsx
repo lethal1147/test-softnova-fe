@@ -1,4 +1,3 @@
-import BaseInput from "@/components/common/baseInput";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -7,6 +6,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
 import { Link } from "react-router-dom";
 
 export default function RegisterPage() {
@@ -19,9 +19,9 @@ export default function RegisterPage() {
           </CardTitle>
         </CardHeader>
         <CardContent className="flex flex-col gap-3 w-full m-auto">
-          <BaseInput label="Email" />
-          <BaseInput label="Password" />
-          <BaseInput label="Confirm-Password" />
+          <Input />
+          <Input />
+          <Input />
         </CardContent>
         <CardFooter className="flex justify-end gap-5">
           <Button asChild variant="outline">

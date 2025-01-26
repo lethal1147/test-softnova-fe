@@ -4,3 +4,8 @@ export interface BaseResponseProps<T> {
   data: T;
   error: boolean;
 }
+
+export interface BaseQueryIndexProps {
+  page: number;
+  limit: number;
+}

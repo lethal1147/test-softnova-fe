@@ -17,9 +17,22 @@ export async function handleError(error: unknown, options?: ExternalToast) {
         ? error.response?.data.message
         : "An unexpected error occurred";
   }
-  console.log(error);
   toast.error(errorMessage, {
     duration: 5000,
     ...options,
   });
+}
+
+const signaturesBase64: { [key: string]: string } = {
+  iVBORw0KGgo: "image/png",
+  "/9j/": "image/jpg",
+};
+
+export function detectMimeType(b64: string) {
+  for (const s in signaturesBase64) {
+    if (b64.indexOf(s) === 0) {
+      return signaturesBase64[s];
+    }
+  }
+  return "";
 }
