@@ -6,13 +6,17 @@ import { BOOKS_MANAGEMENT_TABLE_COLUMNS } from "@/constants";
 import { useBookStore } from "@/stores/bookStore";
 import { useEffect, useState } from "react";
 import BookForm from "./components/bookForm";
+import { useLoaderStore } from "@/stores";
 
 export default function BooksManagement() {
   const [openDialog, setOpenDialog] = useState(false);
   const { books, bookFilter, getSearchBook } = useBookStore();
+  const { startLoading, stopLoading } = useLoaderStore();
 
   useEffect(() => {
+    startLoading();
     getSearchBook(bookFilter);
+    stopLoading();
   }, []);
 
   const onClose = () => setOpenDialog(false);

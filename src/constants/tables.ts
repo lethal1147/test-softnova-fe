@@ -1,4 +1,4 @@
-import { BaseColumnProps } from "@/types";
+import { BaseColumnProps, BookTransactionIndexTable } from "@/types";
 import { Book } from "@/types";
 
 export const BOOKS_MANAGEMENT_TABLE_COLUMNS: BaseColumnProps<Book>[] = [
@@ -8,3 +8,12 @@ export const BOOKS_MANAGEMENT_TABLE_COLUMNS: BaseColumnProps<Book>[] = [
   { key: "createdAt", label: "Create Date" },
   { key: "updatedAt", label: "Update Date" },
 ];
+
+export const PURCHASE_HISTORY_TABLE_COLUMNS: BaseColumnProps<BookTransactionIndexTable>[] =
+  [
+    { key: "index", label: "#" },
+    { key: "createdAt", label: "Create Date" },
+    { key: "total", label: "Price before discount" },
+    { key: "discount", label: "Discount" },
+    { key: "net", label: "Total" },
+  ];

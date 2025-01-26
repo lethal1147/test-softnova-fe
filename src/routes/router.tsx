@@ -1,5 +1,12 @@
 import { AuthenLayout } from "@/layout";
-import { BooksPage, LoginPage, RegisterPage, BooksManagement } from "@/pages";
+import {
+  BooksPage,
+  LoginPage,
+  RegisterPage,
+  BooksManagement,
+  CheckoutPage,
+  TransactionPage,
+} from "@/pages";
 import {
   createBrowserRouter,
   createRoutesFromElements,
@@ -15,6 +22,8 @@ export const router = createBrowserRouter(
       <Route path="*" element={<LoginPage />} />
       <Route element={<AuthenLayout />}>
         <Route path="books" element={<BooksPage />} />
+        <Route path="checkout" element={<CheckoutPage />} />
+        <Route path="purchase-history" element={<TransactionPage />} />
         <Route element={<ProtectedRoute requireRoles={["admin"]} />}>
           <Route path="books-management" element={<BooksManagement />} />
         </Route>

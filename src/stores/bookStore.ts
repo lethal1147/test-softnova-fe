@@ -22,7 +22,7 @@ interface BookState {
   submitBook: (body: BookSchemaType, id?: number) => Promise<void>;
 }
 
-export const useBookStore = create<BookState>((set) => ({
+export const useBookStore = create<BookState>((set, get) => ({
   books: [],
   bestSeller: [],
   newRelease: [],
@@ -77,9 +77,7 @@ export const useBookStore = create<BookState>((set) => ({
 
       if (response.error) throw new Error(response.message);
 
-      await useBookStore
-        .getState()
-        .getSearchBook(useBookStore.getState().bookFilter);
+      await get().getSearchBook(get().bookFilter);
       set({ selectedBook: null });
       handleSuccess(response.message);
     } catch (err) {

@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useLoaderStore, useUserStore } from "@/stores";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import {
   Form,
@@ -21,13 +21,11 @@ export default function LoginPage() {
   });
   const { login } = useUserStore();
   const { startLoading, stopLoading } = useLoaderStore();
-  const navigate = useNavigate();
 
   const onSubmit = async (data: LoginSchemaType) => {
     try {
       startLoading();
       await login(data.email, data.password);
-      navigate("/books");
     } catch (err) {
       handleError(err);
     } finally {

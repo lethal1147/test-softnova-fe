@@ -7,20 +7,14 @@ import {
 } from "../ui/carousel";
 import { Card, CardContent } from "../ui/card";
 import BookCard from "./bookCard";
-
-interface Book {
-  id: number;
-  bookImage: string;
-  bookName: string;
-  author: string;
-  price: number;
-}
+import { Book } from "@/types";
 
 interface CarouselProps {
   books: Book[];
+  isBestSeller: boolean;
 }
 
-export default function BookCarousel({ books }: CarouselProps) {
+export default function BookCarousel({ books, isBestSeller }: CarouselProps) {
   return (
     <Carousel
       opts={{
@@ -30,12 +24,16 @@ export default function BookCarousel({ books }: CarouselProps) {
       className="w-full z-10 max-w-sm md:max-w-2xl lg:max-w-4xl xl:max-w-6xl mx-auto"
     >
       <CarouselContent>
-        {books.map((book) => (
+        {books.map((book, idx) => (
           <CarouselItem key={book.id} className="md:basis-1/2 lg:basis-1/3">
             <div className="p-1">
               <Card className="z-10">
-                <CardContent className="flex items-center justify-center p-6">
-                  <BookCard {...book} />
+                <CardContent className="flex aspect-square items-center justify-center p-6">
+                  <BookCard
+                    isBestSeller={isBestSeller}
+                    index={idx + 1}
+                    book={book}
+                  />
                 </CardContent>
               </Card>
             </div>
