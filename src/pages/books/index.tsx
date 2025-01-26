@@ -1,17 +1,13 @@
 import BookSection from "@/components/books/bookSection";
 import FilterBookSidebar from "@/components/books/filterBookSidebar";
-import { useLoaderStore } from "@/stores";
 import { useBookStore } from "@/stores/bookStore";
 import { useEffect } from "react";
 
 export default function BooksPage() {
   const { getHomepageBook, newRelease } = useBookStore();
-  const { startLoading, stopLoading } = useLoaderStore();
 
   useEffect(() => {
-    startLoading();
     getHomepageBook();
-    stopLoading();
   }, []);
 
   return (

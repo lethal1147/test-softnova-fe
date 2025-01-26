@@ -6,18 +6,23 @@ import { BOOKS_MANAGEMENT_TABLE_COLUMNS } from "@/constants";
 import { useBookStore } from "@/stores/bookStore";
 import { useEffect, useState } from "react";
 import BookForm from "./components/bookForm";
-import { useLoaderStore } from "@/stores";
+import TablePagination from "@/components/table/tablePagination";
+import { usePagination } from "@/hooks";
 
 export default function BooksManagement() {
   const [openDialog, setOpenDialog] = useState(false);
-  const { books, bookFilter, getSearchBook } = useBookStore();
-  const { startLoading, stopLoading } = useLoaderStore();
+  const { books, bookFilter, getSearchBook, totalBooks } = useBookStore();
+  const {
+    page,
+    pageLimit,
+    handlerNextPage,
+    handlerPrevPage,
+    handlerLimitChange,
+  } = usePagination({ size: totalBooks });
 
   useEffect(() => {
-    startLoading();
-    getSearchBook(bookFilter);
-    stopLoading();
-  }, []);
+    getSearchBook({ ...bookFilter, page, limit: pageLimit });
+  }, [page, pageLimit]);
 
   const onClose = () => setOpenDialog(false);
 
@@ -37,6 +42,15 @@ export default function BooksManagement() {
           <BaseDataTable
             rows={books}
             columns={BOOKS_MANAGEMENT_TABLE_COLUMNS}
+          />
+
+          <TablePagination
+            handlerPageLimitChange={handlerLimitChange}
+            handlerNextPage={handlerNextPage}
+            handlerPrevPage={handlerPrevPage}
+            totalDocs={totalBooks}
+            page={page}
+            pageLimit={pageLimit}
           />
         </div>
       </div>

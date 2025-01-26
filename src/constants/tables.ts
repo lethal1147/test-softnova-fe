@@ -1,5 +1,15 @@
-import { BaseColumnProps, BookTransactionIndexTable } from "@/types";
+import {
+  BaseColumnProps,
+  BookTransactionIndexTable,
+  OptionType,
+} from "@/types";
 import { Book } from "@/types";
+
+export const PAGINATION_OPTIONS: OptionType[] = [
+  { label: 5, value: 5 },
+  { label: 10, value: 10 },
+  { label: 20, value: 20 },
+];
 
 export const BOOKS_MANAGEMENT_TABLE_COLUMNS: BaseColumnProps<Book>[] = [
   { key: "index", label: "#" },

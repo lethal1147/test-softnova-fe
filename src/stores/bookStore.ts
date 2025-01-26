@@ -8,9 +8,11 @@ import { BookSchemaType } from "@/pages/booksManagement/schema";
 import { BaseResponseProps, Book, BookQuery } from "@/types";
 import { handleError, handleSuccess } from "@/utils";
 import { create } from "zustand";
+import { useLoaderStore } from "./loaderStore";
 
 interface BookState {
   books: Book[];
+  totalBooks: number;
   bestSeller: Book[];
   newRelease: Book[];
   selectedBook: Book | null;
@@ -24,6 +26,7 @@ interface BookState {
 
 export const useBookStore = create<BookState>((set, get) => ({
   books: [],
+  totalBooks: 0,
   bestSeller: [],
   newRelease: [],
   selectedBook: null,
@@ -36,15 +39,19 @@ export const useBookStore = create<BookState>((set, get) => ({
   },
   getSearchBook: async (query) => {
     try {
+      useLoaderStore.getState().startLoading();
       const response = await getSearchBookApi(query);
       if (response.error) throw new Error(response.message);
-      set({ books: response.data });
+      set({ books: response.data.books, totalBooks: response.data.total });
     } catch (err) {
       handleError(err);
+    } finally {
+      useLoaderStore.getState().stopLoading();
     }
   },
   getHomepageBook: async () => {
     try {
+      useLoaderStore.getState().startLoading();
       const response = await getHomepageBookApi();
       if (response.error) throw new Error(response.message);
       set({
@@ -53,6 +60,8 @@ export const useBookStore = create<BookState>((set, get) => ({
       });
     } catch (err) {
       handleError(err);
+    } finally {
+      useLoaderStore.getState().stopLoading();
     }
   },
   selectBook: (book: Book) => {
@@ -63,6 +72,7 @@ export const useBookStore = create<BookState>((set, get) => ({
   },
   submitBook: async (body: BookSchemaType, id?: number) => {
     try {
+      useLoaderStore.getState().startLoading();
       const formData = new FormData();
       formData.append("body", JSON.stringify({ ...body, bookImage: "" }));
       if (body.bookImage instanceof File) {
@@ -82,6 +92,8 @@ export const useBookStore = create<BookState>((set, get) => ({
       handleSuccess(response.message);
     } catch (err) {
       handleError(err);
+    } finally {
+      useLoaderStore.getState().stopLoading();
     }
   },
 }));

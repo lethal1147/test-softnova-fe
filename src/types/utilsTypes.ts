@@ -9,3 +9,8 @@ export interface BaseQueryIndexProps {
   page: number;
   limit: number;
 }
+
+export type OptionType = {
+  label: string | number;
+  value: string | number;
+};

@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { useLoaderStore, useUserStore } from "@/stores";
+import { useUserStore } from "@/stores";
 import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import {
@@ -14,22 +14,19 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { loginSchema, LoginSchemaType } from "./schema";
 import { Input } from "@/components/ui/input";
 import { handleError } from "@/utils";
+import { PROJECT_NAMES } from "@/constants";
 
 export default function LoginPage() {
   const form = useForm<LoginSchemaType>({
     resolver: zodResolver(loginSchema),
   });
   const { login } = useUserStore();
-  const { startLoading, stopLoading } = useLoaderStore();
 
   const onSubmit = async (data: LoginSchemaType) => {
     try {
-      startLoading();
       await login(data.email, data.password);
     } catch (err) {
       handleError(err);
-    } finally {
-      stopLoading();
     }
   };
 
@@ -38,7 +35,7 @@ export default function LoginPage() {
       <Card className="w-full mx-5 sm:mx-0 sm:w-1/2 lg:w-1/3 h-1/2 flex flex-col">
         <CardHeader>
           <CardTitle className="text-3xl font-bold text-center">
-            Login
+            {PROJECT_NAMES}
           </CardTitle>
         </CardHeader>
         <CardContent>

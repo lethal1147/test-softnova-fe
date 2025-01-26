@@ -55,7 +55,7 @@ export default function BookForm({ onClose }: { onClose: () => void }) {
               name="bookImage"
               render={({ fieldState: { error } }) => (
                 <FormItem className="flex size-full items-start justify-center">
-                  <FormControl className=" size-[180px] ">
+                  <FormControl className=" w-[180px] h-[240px]">
                     <div className="">
                       <label className="size-full" htmlFor="bookImage">
                         <div className="relative size-full">

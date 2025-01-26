@@ -31,7 +31,7 @@ export default function PreviewImage({ image, error }: PreviewImagePropsType) {
   return (
     <div
       className={cn(
-        "flex size-full items-center justify-center overflow-hidden rounded-full bg-gray-200",
+        "flex size-full items-center justify-center overflow-hidden rounded-sm bg-gray-200",
         error ? "border border-main-red" : ""
       )}
     >
@@ -46,7 +46,7 @@ export default function PreviewImage({ image, error }: PreviewImagePropsType) {
           <span className="text-gray-500">No image</span>
         </div>
       )}
-      <div className="absolute inset-0 flex cursor-pointer items-center justify-center rounded-full text-transparent transition-all duration-150 hover:bg-black/50 hover:text-white">
+      <div className="absolute inset-0 flex cursor-pointer items-center justify-center rounded-sm text-transparent transition-all duration-150 hover:bg-black/50 hover:text-white">
         <span className="text-sm">Change Image</span>
       </div>
     </div>

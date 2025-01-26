@@ -6,7 +6,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { useLoaderStore, useUserStore } from "@/stores";
+import { useUserStore } from "@/stores";
 import { useBookTransactionStore } from "@/stores/bookTransactionStore";
 import { useCartStore } from "@/stores/cartStore";
 import { CreateBookTransactionBody } from "@/types";
@@ -21,7 +21,6 @@ export default function CheckoutPage() {
   const { carts } = useCartStore();
   const { createTransaction } = useBookTransactionStore();
   const { user } = useUserStore();
-  const { startLoading, stopLoading } = useLoaderStore();
   const { subtotal, total, discount } = calculateCartDiscount(carts);
 
   const onCheckout = async () => {
@@ -36,9 +35,7 @@ export default function CheckoutPage() {
         qty: cart.qty,
       })),
     };
-    startLoading();
     await createTransaction(body);
-    stopLoading();
   };
 
   return (

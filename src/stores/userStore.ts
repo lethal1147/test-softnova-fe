@@ -3,6 +3,7 @@ import { User } from "@/types";
 import { handleError, handleSuccess } from "@/utils";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
+import { useLoaderStore } from "./loaderStore";
 
 interface UserState {
   user: null | User;
@@ -19,6 +20,7 @@ export const useUserStore = create<UserState>()(
       isAuthenticated: false,
       login: async (email, password) => {
         try {
+          useLoaderStore.getState().startLoading();
           const response = await loginApi({ email, password });
           if (response.error) throw new Error(response.message);
 
@@ -29,6 +31,8 @@ export const useUserStore = create<UserState>()(
           window.location.href = "/books";
         } catch (err) {
           handleError(err);
+        } finally {
+          useLoaderStore.getState().stopLoading();
         }
       },
       logout: () => {
@@ -40,6 +44,7 @@ export const useUserStore = create<UserState>()(
       },
       register: async (email, password) => {
         try {
+          useLoaderStore.getState().startLoading();
           const response = await registerApi({ email, password });
           if (response.error) throw new Error(response.message);
 
@@ -53,6 +58,8 @@ export const useUserStore = create<UserState>()(
           window.location.href = "/books";
         } catch (err) {
           handleError(err);
+        } finally {
+          useLoaderStore.getState().stopLoading();
         }
       },
     }),

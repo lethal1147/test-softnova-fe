@@ -4,6 +4,7 @@ import { handleError, handleSuccess } from "@/utils";
 import { create } from "zustand";
 import { useUserStore } from "./userStore";
 import { useCartStore } from "./cartStore";
+import { useLoaderStore } from "./loaderStore";
 
 interface BookTransactionState {
   transactions: BookTransactionWithItem[];
@@ -16,6 +17,7 @@ export const useBookTransactionStore = create<BookTransactionState>(
     transactions: [],
     getAllTransaction: async () => {
       try {
+        useLoaderStore.getState().startLoading();
         const userId = useUserStore.getState().user?.id;
         if (!userId) throw new Error("User not logged in.");
 
@@ -27,10 +29,13 @@ export const useBookTransactionStore = create<BookTransactionState>(
         set({ transactions: response.data });
       } catch (err) {
         handleError(err);
+      } finally {
+        useLoaderStore.getState().stopLoading();
       }
     },
     createTransaction: async (body: CreateBookTransactionBody) => {
       try {
+        useLoaderStore.getState().startLoading();
         const response = await createTransactionApi(body);
         if (response.error) throw new Error(response.message);
 
@@ -39,6 +44,8 @@ export const useBookTransactionStore = create<BookTransactionState>(
         await useCartStore.getState().getCart();
       } catch (err) {
         handleError(err);
+      } finally {
+        useLoaderStore.getState().stopLoading();
       }
     },
   })

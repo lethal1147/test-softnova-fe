@@ -1,3 +1,4 @@
+import { DISCOUNT_RATES } from "@/constants";
 import { CartWithBook } from "@/types";
 
 /**
@@ -25,39 +26,25 @@ export const calculateCartDiscount = (
 } => {
   // Point A = 2A + 1B
   // Point B = 3A + 3B
-  const discountRates: Record<number, number> = {
-    2: 0.1,
-    3: 0.2,
-    4: 0.3,
-    5: 0.4,
-    6: 0.5,
-    7: 0.6,
-  };
-  const subtotal = carts.reduce(
-    (sum, cart) => sum + +cart.book.price * +cart.qty,
-    0
-  );
+  let subtotal = 0;
+  let sumPriceOfEach = 0;
+  const uniqueBooks = new Set<number>();
+  const quantityCount: Record<number, number> = {};
 
-  const unique = new Set(carts.map((cart) => cart.bookId));
-  if (unique.size < 2) return { subtotal, discount: 0, total: subtotal };
+  for (const cart of carts) {
+    subtotal += +cart.book.price * +cart.qty;
+    uniqueBooks.add(cart.bookId);
+    quantityCount[cart.qty] = (quantityCount[cart.qty] || 0) + 1;
+    sumPriceOfEach += +cart.book.price;
+  }
 
-  const discountRate = discountRates[unique.size] || 0;
+  if (uniqueBooks.size < 2) {
+    return { subtotal, discount: 0, total: subtotal };
+  }
 
-  const quantityMap = new Map<number, number>();
-
-  carts.forEach((item) => {
-    const currentCount = quantityMap.get(item.qty) || 0;
-    quantityMap.set(item.qty, currentCount + 1);
-  });
-  const sumPriceOfEach = carts.reduce((acc, item) => {
-    return acc + +item.book.price;
-  }, 0);
-  const totalPromotion = Math.min(
-    ...Array.from(quantityMap.entries()).map(([key]) => key)
-  );
-  const sumTotal = carts.reduce((acc, item) => {
-    return acc + item.book.price * item.qty;
-  }, 0);
+  const discountRate = DISCOUNT_RATES[uniqueBooks.size] || 0;
+  const totalPromotion = Math.min(...Object.keys(quantityCount).map(Number));
   const discount = sumPriceOfEach * discountRate * totalPromotion;
-  return { subtotal: sumTotal, discount: discount, total: sumTotal - discount };
+
+  return { subtotal: subtotal, discount: discount, total: subtotal - discount };
 };

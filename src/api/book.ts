@@ -3,7 +3,7 @@ import { BaseResponseProps, Book, BookQuery } from "@/types";
 
 export const getSearchBookApi = async (
   query: BookQuery
-): Promise<BaseResponseProps<Book[]>> =>
+): Promise<BaseResponseProps<{ books: Book[]; total: number }>> =>
   await api.get("/book/search", { params: query });
 
 export const getHomepageBookApi = async (): Promise<
