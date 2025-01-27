@@ -52,29 +52,35 @@ export default function CheckoutPage() {
             <div>
               <h3 className="text-lg font-semibold mb-2">Your Cart</h3>
               <ul className="space-y-4">
-                {carts.map((cart) => (
-                  <li key={cart.id} className="flex items-center space-x-4">
-                    <img
-                      src={formatBase64String(cart.book.bookImage)}
-                      alt={cart.book.name}
-                      width={60}
-                      height={90}
-                      className="object-cover"
-                    />
-                    <div className="flex-1">
-                      <h4 className="font-medium">{cart.book.name}</h4>
-                      <p className="text-sm text-gray-500">
-                        Quantity: {cart.qty}
+                {carts.length ? (
+                  carts.map((cart) => (
+                    <li key={cart.id} className="flex items-center space-x-4">
+                      <img
+                        src={formatBase64String(cart.book.bookImage)}
+                        alt={cart.book.name}
+                        width={60}
+                        height={90}
+                        className="object-cover"
+                      />
+                      <div className="flex-1">
+                        <h4 className="font-medium">{cart.book.name}</h4>
+                        <p className="text-sm text-gray-500">
+                          Quantity: {cart.qty}
+                        </p>
+                        <p className="text-sm text-gray-500">
+                          Price: {cart.book.price}
+                        </p>
+                      </div>
+                      <p className="font-semibold">
+                        {formatPrice(cart.book.price * cart.qty)}
                       </p>
-                      <p className="text-sm text-gray-500">
-                        Price: {cart.book.price}
-                      </p>
-                    </div>
-                    <p className="font-semibold">
-                      {formatPrice(cart.book.price * cart.qty)}
-                    </p>
-                  </li>
-                ))}
+                    </li>
+                  ))
+                ) : (
+                  <div className="text-gray-500 font-bold text-center">
+                    No item in cart.
+                  </div>
+                )}
               </ul>
             </div>
             <Separator />
@@ -97,7 +103,12 @@ export default function CheckoutPage() {
           </div>
         </CardContent>
         <CardFooter>
-          <Button onClick={onCheckout} type="button" className="w-full">
+          <Button
+            disabled={!carts.length}
+            onClick={onCheckout}
+            type="button"
+            className="w-full"
+          >
             Checkout
           </Button>
         </CardFooter>

@@ -9,10 +9,12 @@ import BookForm from "./components/bookForm";
 import TablePagination from "@/components/table/tablePagination";
 import { usePagination } from "@/hooks";
 import { formatPrice } from "@/utils";
+import { PencilIcon } from "lucide-react";
 
 export default function BooksManagement() {
   const [openDialog, setOpenDialog] = useState(false);
-  const { books, bookFilter, getSearchBook, totalBooks } = useBookStore();
+  const { books, bookFilter, getSearchBook, totalBooks, selectBook } =
+    useBookStore();
   const {
     page,
     pageLimit,
@@ -25,10 +27,27 @@ export default function BooksManagement() {
     getSearchBook({ ...bookFilter, page, limit: pageLimit });
   }, [page, pageLimit]);
 
-  const onClose = () => setOpenDialog(false);
+  const onClose = () => {
+    setOpenDialog(false);
+    selectBook(null);
+  };
   const formatted = books.map((book) => ({
     ...book,
     price: formatPrice(book.price),
+    operation: (
+      <div className="flex justify-center">
+        <Button
+          className="self-center"
+          type="button"
+          onClick={() => {
+            selectBook(book);
+            setOpenDialog(true);
+          }}
+        >
+          <PencilIcon />
+        </Button>
+      </div>
+    ),
   }));
 
   return (

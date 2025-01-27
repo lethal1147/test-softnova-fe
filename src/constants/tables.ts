@@ -4,6 +4,7 @@ import {
   OptionType,
 } from "@/types";
 import { Book } from "@/types";
+import { ReactNode } from "react";
 
 export const PAGINATION_OPTIONS: OptionType[] = [
   { label: 5, value: 5 },
@@ -12,7 +13,7 @@ export const PAGINATION_OPTIONS: OptionType[] = [
 ];
 
 export const BOOKS_MANAGEMENT_TABLE_COLUMNS: BaseColumnProps<
-  Omit<Book, "price"> & { price: string }
+  Omit<Book, "price"> & { price: string; operation: ReactNode }
 >[] = [
   { key: "index", label: "#" },
   { key: "name", label: "Name" },
@@ -20,6 +21,7 @@ export const BOOKS_MANAGEMENT_TABLE_COLUMNS: BaseColumnProps<
   { key: "price", label: "Price" },
   { key: "createdAt", label: "Create Date" },
   { key: "updatedAt", label: "Update Date" },
+  { key: "operation", label: "" },
 ];
 
 export const PURCHASE_HISTORY_TABLE_COLUMNS: BaseColumnProps<BookTransactionIndexTable>[] =

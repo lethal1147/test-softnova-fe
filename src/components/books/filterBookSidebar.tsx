@@ -57,7 +57,7 @@ export default function FilterBookSidebar({
         <Label>Price Range</Label>
         <Slider
           className="my-3"
-          max={5000}
+          max={10000}
           step={1}
           value={priceRange}
           onValueChange={onChangePriceRange}

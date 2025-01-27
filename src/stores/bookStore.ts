@@ -19,7 +19,7 @@ interface BookState {
   bookFilter: BookQuery;
   getSearchBook: (query: BookQuery) => Promise<void>;
   getHomepageBook: () => Promise<void>;
-  selectBook: (book: Book) => void;
+  selectBook: (book: Book | null) => void;
   changeFilter: (key: keyof BookQuery, value: string | number) => void;
   submitBook: (body: BookSchemaType, id?: number) => Promise<void>;
 }
@@ -64,7 +64,7 @@ export const useBookStore = create<BookState>((set, get) => ({
       useLoaderStore.getState().stopLoading();
     }
   },
-  selectBook: (book: Book) => {
+  selectBook: (book: Book | null) => {
     set({ selectedBook: book });
   },
   changeFilter: (key: keyof BookQuery, value: string | number) => {

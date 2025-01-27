@@ -24,8 +24,8 @@ export default function TransactionPage() {
   } = usePagination({ size: totalTransactions });
 
   useEffect(() => {
-    getAllTransaction();
-  }, []);
+    getAllTransaction({ page, limit: pageLimit });
+  }, [page, pageLimit]);
 
   return (
     <div className="h-full flex gap-10">
