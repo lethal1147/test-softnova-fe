@@ -4,7 +4,7 @@ import { useBookStore } from "@/stores/bookStore";
 import { useEffect } from "react";
 
 export default function BooksPage() {
-  const { getHomepageBook, newRelease } = useBookStore();
+  const { getHomepageBook, newRelease, bestSeller } = useBookStore();
 
   useEffect(() => {
     getHomepageBook();
@@ -14,7 +14,7 @@ export default function BooksPage() {
     <div className="h-full flex">
       <FilterBookSidebar navigate />
       <div className="container space-y-3 !z-10">
-        <BookSection books={newRelease} title="Best seller" />
+        <BookSection books={bestSeller} title="Best seller" />
         <BookSection books={newRelease} title="New release" />
       </div>
     </div>

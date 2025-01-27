@@ -9,7 +9,7 @@ export default function SearchPage() {
   return (
     <div className="h-full flex gap-5">
       <FilterBookSidebar />
-      <div className="container gap-5 grid grid-cols-3 !z-10">
+      <div className="container gap-5 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 !z-10">
         {books.map((book, idx) => (
           <div className="p-1">
             <Card className="z-10 aspect-square">
