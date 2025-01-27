@@ -32,7 +32,7 @@ export default function PreviewImage({ image, error }: PreviewImagePropsType) {
     <div
       className={cn(
         "flex size-full items-center justify-center overflow-hidden rounded-sm bg-gray-200",
-        error ? "border border-main-red" : ""
+        error ? "!border !border-red-500" : ""
       )}
     >
       {previewImage ? (
