@@ -16,12 +16,14 @@ import {
   formatPrice,
 } from "@/utils";
 import { Separator } from "@radix-ui/react-separator";
+import { useNavigate } from "react-router-dom";
 
 export default function CheckoutPage() {
   const { carts } = useCartStore();
   const { createTransaction } = useBookTransactionStore();
   const { user } = useUserStore();
   const { subtotal, total, discount } = calculateCartDiscount(carts);
+  const navigate = useNavigate();
 
   const onCheckout = async () => {
     if (!user?.id) return;
@@ -36,6 +38,7 @@ export default function CheckoutPage() {
       })),
     };
     await createTransaction(body);
+    navigate("/purchase-history");
   };
 
   return (

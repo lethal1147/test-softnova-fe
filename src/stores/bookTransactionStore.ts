@@ -8,6 +8,7 @@ import { useLoaderStore } from "./loaderStore";
 
 interface BookTransactionState {
   transactions: BookTransactionWithItem[];
+  totalTransactions: number;
   getAllTransaction: () => Promise<void>;
   createTransaction: (body: CreateBookTransactionBody) => Promise<void>;
 }
@@ -15,6 +16,7 @@ interface BookTransactionState {
 export const useBookTransactionStore = create<BookTransactionState>(
   (set, get) => ({
     transactions: [],
+    totalTransactions: 0,
     getAllTransaction: async () => {
       try {
         useLoaderStore.getState().startLoading();
@@ -26,7 +28,10 @@ export const useBookTransactionStore = create<BookTransactionState>(
           limit: 10,
         });
         if (response.error) throw new Error(response.message);
-        set({ transactions: response.data });
+        set({
+          transactions: response.data.transactions,
+          totalTransactions: response.data.total,
+        });
       } catch (err) {
         handleError(err);
       } finally {

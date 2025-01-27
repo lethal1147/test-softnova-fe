@@ -11,10 +11,13 @@ export const PAGINATION_OPTIONS: OptionType[] = [
   { label: 20, value: 20 },
 ];
 
-export const BOOKS_MANAGEMENT_TABLE_COLUMNS: BaseColumnProps<Book>[] = [
+export const BOOKS_MANAGEMENT_TABLE_COLUMNS: BaseColumnProps<
+  Omit<Book, "price"> & { price: string }
+>[] = [
   { key: "index", label: "#" },
   { key: "name", label: "Name" },
   { key: "author", label: "Author" },
+  { key: "price", label: "Price" },
   { key: "createdAt", label: "Create Date" },
   { key: "updatedAt", label: "Update Date" },
 ];

@@ -15,7 +15,9 @@ export const createTransactionApi = async (
 export const getAllTransactionByIdApi = async (
   userId: number,
   query: BaseQueryIndexProps
-): Promise<BaseResponseProps<BookTransactionWithItem[]>> =>
+): Promise<
+  BaseResponseProps<{ transactions: BookTransactionWithItem[]; total: number }>
+> =>
   await api.get(`/transaction/${userId}`, {
     params: query,
   });

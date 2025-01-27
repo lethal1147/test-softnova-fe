@@ -6,6 +6,7 @@ import {
   BooksManagement,
   CheckoutPage,
   TransactionPage,
+  SearchPage,
 } from "@/pages";
 import {
   createBrowserRouter,
@@ -22,6 +23,7 @@ export const router = createBrowserRouter(
       <Route path="*" element={<LoginPage />} />
       <Route element={<AuthenLayout />}>
         <Route path="books" element={<BooksPage />} />
+        <Route path="search" element={<SearchPage />} />
         <Route path="checkout" element={<CheckoutPage />} />
         <Route path="purchase-history" element={<TransactionPage />} />
         <Route element={<ProtectedRoute requireRoles={["admin"]} />}>

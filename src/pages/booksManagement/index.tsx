@@ -8,6 +8,7 @@ import { useEffect, useState } from "react";
 import BookForm from "./components/bookForm";
 import TablePagination from "@/components/table/tablePagination";
 import { usePagination } from "@/hooks";
+import { formatPrice } from "@/utils";
 
 export default function BooksManagement() {
   const [openDialog, setOpenDialog] = useState(false);
@@ -25,6 +26,10 @@ export default function BooksManagement() {
   }, [page, pageLimit]);
 
   const onClose = () => setOpenDialog(false);
+  const formatted = books.map((book) => ({
+    ...book,
+    price: formatPrice(book.price),
+  }));
 
   return (
     <div className="h-full flex gap-10">
@@ -40,7 +45,7 @@ export default function BooksManagement() {
         </Dialog>
         <div className="w-full">
           <BaseDataTable
-            rows={books}
+            rows={formatted}
             columns={BOOKS_MANAGEMENT_TABLE_COLUMNS}
           />
 

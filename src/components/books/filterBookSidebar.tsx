@@ -5,10 +5,19 @@ import { Slider } from "../ui/slider";
 import { Button } from "../ui/button";
 import { useBookStore } from "@/stores/bookStore";
 import { formatPrice } from "@/utils";
+import { useNavigate } from "react-router-dom";
 
-export default function FilterBookSidebar() {
-  const [priceRange, setPriceRange] = useState([0, 5000]);
+export default function FilterBookSidebar({
+  navigate = false,
+}: {
+  navigate?: boolean;
+}) {
   const { bookFilter, changeFilter, getSearchBook } = useBookStore();
+  const [priceRange, setPriceRange] = useState([
+    bookFilter.minPrice || 0,
+    bookFilter.maxPrice || 5000,
+  ]);
+  const navigateTo = useNavigate();
 
   const onChangePriceRange = (val: number[]) => {
     changeFilter("minPrice", val[0]);
@@ -44,7 +53,13 @@ export default function FilterBookSidebar() {
             <span>{formatPrice(priceRange[1])}</span>
           </div>
         </div>
-        <Button type="button" onClick={() => getSearchBook(bookFilter)}>
+        <Button
+          type="button"
+          onClick={() => {
+            getSearchBook(bookFilter);
+            if (navigate) navigateTo("/search");
+          }}
+        >
           Apply search
         </Button>
       </div>

@@ -1,7 +1,8 @@
 import { Button } from "@/components/ui/button";
 import { useCartStore } from "@/stores/cartStore";
 import { Book } from "@/types";
-import { formatBase64String } from "@/utils";
+import { formatBase64String, formatPrice } from "@/utils";
+import { useState } from "react";
 
 interface BookCardProps {
   book: Book;
@@ -12,6 +13,8 @@ interface BookCardProps {
 export default function BookCard({ book, index, isBestSeller }: BookCardProps) {
   const { addToCart } = useCartStore();
   const showLabel = index && index <= 3;
+  const [isLoading, setIsLoading] = useState(true);
+
   return (
     <div className="rounded-lg shadow-md overflow-hidden relative">
       {showLabel && isBestSeller && (
@@ -24,13 +27,19 @@ export default function BookCard({ book, index, isBestSeller }: BookCardProps) {
       <img
         src={formatBase64String(book.bookImage)}
         alt={book.name}
-        className="w-full h-64 object-cover"
+        className={`w-full h-64 object-cover transition-opacity duration-300 ${
+          isLoading ? "opacity-0" : "opacity-100"
+        }`}
+        loading="lazy"
+        onLoad={() => setIsLoading(false)}
       />
       <div className="p-4">
         <h3 className="font-semibold text-lg mb-1">{book.name}</h3>
         <p className="text-gray-600 text-sm mb-2">{book.author}</p>
         <div className="flex justify-between items-center">
-          <span className="font-bold text-blue-600">{book.price}฿</span>
+          <span className="font-bold text-blue-600">
+            {formatPrice(book.price)}
+          </span>
           <Button
             onClick={() => addToCart(book.id)}
             type="button"

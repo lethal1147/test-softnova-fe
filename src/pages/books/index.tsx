@@ -12,7 +12,7 @@ export default function BooksPage() {
 
   return (
     <div className="h-full flex">
-      <FilterBookSidebar />
+      <FilterBookSidebar navigate />
       <div className="container space-y-3 !z-10">
         <BookSection books={newRelease} title="Best seller" />
         <BookSection books={newRelease} title="New release" />
