@@ -15,6 +15,7 @@ import { loginSchema, LoginSchemaType } from "./schema";
 import { Input } from "@/components/ui/input";
 import { handleError } from "@/utils";
 import { PROJECT_NAMES } from "@/constants";
+import { Separator } from "@/components/ui/separator";
 
 export default function LoginPage() {
   const form = useForm<LoginSchemaType>({
@@ -68,15 +69,10 @@ export default function LoginPage() {
                   </FormItem>
                 )}
               />
-              <div className="flex flex-col my-3">
-                <Button type="submit">Login</Button>
-                <Button
-                  className="px-0 self-start text-blue-500 underline hover:text-blue-600"
-                  variant="link"
-                >
-                  Forget password
-                </Button>
-              </div>
+              <Button className="mt-3" type="submit">
+                Login
+              </Button>
+              <Separator className="my-3" />
               <Button asChild variant="outline">
                 <Link to="/register">Register</Link>
               </Button>
